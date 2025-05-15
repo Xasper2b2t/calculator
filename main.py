@@ -15,6 +15,12 @@ def result_calculate(size, lights, device):
 @app.route('/')
 def index():
     return render_template('index.html')
+
+
+
+
+
+
 #Вторая страница
 @app.route('/<size>')
 def lights(size):
@@ -23,11 +29,12 @@ def lights(size):
                             size=size
                            )
 
+
 #Третья страница
 @app.route('/<size>/<lights>')
 def electronics(size, lights):
     return render_template(
-                            'electronics.html',                           
+                            'electronics.html',
                             size = size, 
                             lights = lights                           
                            )
@@ -41,7 +48,7 @@ def end(size, lights, device):
                                                     int(device)
                                                     )
                         )
-#Форма
+
 @app.route('/form')
 def form():
     return render_template('form.html')
@@ -51,11 +58,23 @@ def form():
 def submit_form():
     #Создай переменные для сбора информации
     name = request.form['name']
-
+    address = request.form['address']
+    date = request.form['date']
+    email = request.form['email']
+    with open('form.txt', 'a',) as f:
+            f.write(name +'\n')
+            f.write(address+'\n')
+            f.write(date +'\n')
+            f.write(email +'\n' )
+    print(name)
     # здесь вы можете сохранить данные или отправить их по электронной почте
     return render_template('form_result.html', 
                            #Помести переменные
                            name=name,
+                           email=email,
+                           address=address,
+                           date=date,
                            )
+
 
 app.run(debug=True)
